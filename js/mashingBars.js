@@ -1,11 +1,11 @@
 var teamA, teamB;
 
 function setup() {
-  var gameArea = createCanvas(200, 300);
+  var gameArea = createCanvas(250, 500);
   gameArea.parent('game-area');
   noStroke();
-  teamA = new mashingBar(0, height, width/2, height, 50, 128);
-  teamB = new mashingBar(width/2, height, width, height, 50, 0);
+  teamA = new mashingBar(0, height, width/2, height, 25, 128);
+  teamB = new mashingBar(width/2, height, width, height, 25, 0);
 };
 
 function draw() {
