@@ -8,7 +8,7 @@ boolean lastMouseState = false;
 
 void setup() {
   size(200, 300);
-  noStroke();  
+  noStroke();
   teamA = new mashingBar(0, height, width/2, height, 25, 255);
   teamB = new mashingBar(width/2, height, width, height, 25, 0);
 };

@@ -35,7 +35,6 @@ function mashingBar(initX, initY, initWidth, initMax, initPresses, initColour) {
 
   this.incrementHeight = function() {
     this.barHeight -= this.pressSteps;
-    console.log(this.barHeight);
   };
 
   this.display = function() {
