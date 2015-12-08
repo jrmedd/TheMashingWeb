@@ -4,7 +4,9 @@ body {
   font-family: 'Bangers', cursive;  padding-top: 5em;
   padding-bottom: 5em;
 }
-
+canvas {
+  vertical-align: middle;
+}
 .extra-pad {
   padding: 0.25em;
 }
