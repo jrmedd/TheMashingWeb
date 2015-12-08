@@ -9,7 +9,8 @@ function setup() {
   noStroke();
   teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(254,239,110));
   teamB = new mashingBar(width/2, height, width, height, pressesToWin, color(255,53,197));
-  alertOverlay = new gameText(width/2, height/2);
+  alertOverlay = new gameText(width/2, height/2, 48);
+  textFont('Bangers');
 };
 
 /*p5.js loop*/
@@ -37,14 +38,14 @@ $('button[name="B"]').on('click', function() {
 });
 
 /*text overlays*/
-function gameText(initX, initY) {
+function gameText(initX, initY, initSize) {
   this.xPos = initX;
   this.yPos = initY;
   this.textToDisplay = "";
   this.textOpacity = 0;
   this.fadeOut = false;
   textAlign(CENTER);
-  textSize(32);
+  textSize(initSize);
 
   /*display text*/
   this.display = function(){
