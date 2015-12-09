@@ -17,6 +17,7 @@ function frequencyModulator(initFreq, initRel, initIndex) {
   this.carrierRel = initRel;
   this.modFreq = this.carrierFreq * this.carrierRel;
   this.modulator.frequency.value = this.modFreq;
+  this.modulator.start(0);
   this.modulatorDepth = context.createGain();
   this.modulatorDepth.gain.value = this.modIndex * this.modFreq;
 
@@ -34,5 +35,5 @@ function frequencyModulator(initFreq, initRel, initIndex) {
     this.vca.gain.linearRampToValueAtTime(1, this.currTime + this.attackTime);
     this.currTime += this.attackTime;
     this.vca.gain.linearRampToValueAtTime(0, this.currTime + this.releaseTime);
-  }
-}
+  };
+};
