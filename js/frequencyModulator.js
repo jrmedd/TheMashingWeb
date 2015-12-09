@@ -15,15 +15,14 @@ function frequencyModulator(initFreq, initRel, initIndex) {
   this.modulator = context.createOscillator();
   this.modIndex = initIndex;
   this.carrierRel = initRel;
-  this.modFreq = this.carrierFreq*this.carrierRel;
-  this.modulator.frequency.value = this.carrierFreq*1.25;
-  this.modulator.start(0);
+  this.modFreq = this.carrierFreq * this.carrierRel;
+  this.modulator.frequency.value = this.modFreq;
   this.modulatorDepth = context.createGain();
-  this.modulatorDepth.gain.value = this.modIndex*this.modFreq;
-  this.modulator.connect(this.modulatorDepth);
-  this.modulatorDepth.connect(this.carrier.frequency);
+  this.modulatorDepth.gain.value = this.modIndex * this.modFreq;
 
   /* Rotuing */
+  this.modulator.connect(this.modulatorDepth);
+  this.modulatorDepth.connect(this.carrier.frequency);
   this.carrier.connect(this.vca);
   this.vca.connect(context.destination);
 
@@ -32,16 +31,8 @@ function frequencyModulator(initFreq, initRel, initIndex) {
     this.attackTime = attack * 0.001; //attack time convert from ms
     this.releaseTime = release * 0.001; //release time convert from ms
     this.currTime = context.currentTime;
-    this.vca.gain.linearRampToValueAtTime(0.75, this.currTime + this.attackTime);
+    this.vca.gain.linearRampToValueAtTime(1, this.currTime + this.attackTime);
     this.currTime += this.attackTime;
     this.vca.gain.linearRampToValueAtTime(0, this.currTime + this.releaseTime);
   }
-}
-
-/* sketch around a victory motif */
-var victory = [55,60,64,67,0,64,67,0]; // midi notes for victory melody (0 == rest)
-
-/* function pilfered from Mozilla(?) to convert MIDI note to frequency */
-function frequencyFromNoteNumber(note) {
- return 440 * Math.pow(2,(note-69)/12);
 }

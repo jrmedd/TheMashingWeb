@@ -10,7 +10,7 @@ function setup() {
   gameArea.parent('game-area');
   noStroke();
   teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(254,239,110));
-  teamB = new mashingBar(width/2, height, width, height, pressesToWin, color(255,53,197));
+  teamB = new mashingBar(width/2, height, width/2, height, pressesToWin, color(255,53,197));
   teamAAudio = new frequencyModulator(teamAFreqStart, 2, 2);
   teamBAudio = new frequencyModulator(teamBFreqStart, 1.5, 1.75);
   alertOverlay = new gameText(width/2, height/2, 48);
@@ -33,7 +33,7 @@ function gameWin(team) {
   teamB.resetHeight();
 }
 
-/*team A mashes*/
+/*team A mashes - eventually replace with physical input*/
 $('button[name="A"]').on('click', function() {
   teamA.incrementHeight();
   teamAFreqStart += 7;
@@ -43,7 +43,7 @@ $('button[name="A"]').on('click', function() {
   };
 });
 
-/*team B mashes*/
+/*team B mashes - eventually replace with physical input*/
 $('button[name="B"]').on('click', function() {
   teamB.incrementHeight();
   teamBFreqStart += 7;
