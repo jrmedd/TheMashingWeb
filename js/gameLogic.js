@@ -29,7 +29,7 @@ function draw() {
 /*trigger win state*/
 function gameWin(team) {
   var winningMessage = "Team " + team + " wins!";
-  alertOverlay.flashText(winningMessage, 2.5);
+  alertOverlay.flashText(winningMessage, 2.125);
   teamA.resetHeight();
   teamB.resetHeight();
   buttonsDisabled = true;
@@ -42,20 +42,20 @@ var gameStartCount;
 
 $('button[name="start-game"]').on('click', function(){
   $(this).fadeOut('fast');
-  alertOverlay.flashText('Ready?',2.5);
+  alertOverlay.flashText('Ready?', 4.25);
 	gameStartCount = 3;
 	startTimer = setInterval(function(){ countdown() }, 1000);
 });
 
 function countdown() {
    if (gameStartCount == 0) {
-   alertOverlay.flashText('Mash!', 2.5);
+   alertOverlay.flashText('Mash!', 2.125);
    clearInterval(startTimer);
    buttonsDisabled = false;
    $('.team-buttons').prop('disabled', buttonsDisabled);
    }
    else {
-  	alertOverlay.flashText(gameStartCount, 5);
+  	alertOverlay.flashText(gameStartCount, 4.25);
    	gameStartCount --;
    };
 };
