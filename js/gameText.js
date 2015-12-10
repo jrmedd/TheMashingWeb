@@ -28,10 +28,10 @@ function gameText(initX, initY, initSize) {
   };
 
   /*flash winning team*/
-  this.flashText = function(textToFlash) {
+  this.flashText = function(textToFlash, rate) {
     this.textToDisplay = textToFlash; //winning team text
     this.textOpacity = 255; //max out opacity
     this.fadeOut = true; //set to fade out
-    this.fadeOutRate = 2.5; //set fadeout rate
+    this.fadeOutRate = rate; //set fadeout rate
   };
 };

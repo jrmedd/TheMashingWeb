@@ -3,6 +3,7 @@ var pressesToWin = 10; //presses required to win game (increase based on team si
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
 var teamBVoiceFreq = 220; //starting frequency of team's audio synth
+var buttonsDisabled = true;
 
 /*p5.js setup*/
 function setup() {
@@ -28,10 +29,36 @@ function draw() {
 /*trigger win state*/
 function gameWin(team) {
   var winningMessage = "Team " + team + " wins!";
-  alertOverlay.flashText(winningMessage);
+  alertOverlay.flashText(winningMessage, 2.5);
   teamA.resetHeight();
   teamB.resetHeight();
+  buttonsDisabled = true;
+  $('.team-buttons').prop('disabled', buttonsDisabled);
+  $('button[name="start-game"]').fadeIn();
 }
+/* Count in game*/
+var startTimer;
+var gameStartCount;
+
+$('button[name="start-game"]').on('click', function(){
+  $(this).fadeOut('fast');
+  alertOverlay.flashText('Ready?',2.5);
+	gameStartCount = 3;
+	startTimer = setInterval(function(){ countdown() }, 1000);
+});
+
+function countdown() {
+   if (gameStartCount == 0) {
+   alertOverlay.flashText('Mash!', 2.5);
+   clearInterval(startTimer);
+   buttonsDisabled = false;
+   $('.team-buttons').prop('disabled', buttonsDisabled);
+   }
+   else {
+  	alertOverlay.flashText(gameStartCount, 5);
+   	gameStartCount --;
+   };
+};
 
 /*team A mashes - eventually replace with physical input*/
 $('button[name="A"]').on('click', function() {
