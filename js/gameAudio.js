@@ -4,7 +4,7 @@ masterVolume = audioCtx.createGain();
 masterVolume.gain.value = 0.5;
 masterVolume.connect(audioCtx.destination);
 
-function frequencyModulator(initFreq, initRel, initIndex) {
+function simpleSynth(initFreq, initRel, initIndex) {
   /* Carrier oscillator */
   this.carrier = audioCtx.createOscillator();
   this.carrierFreq = initFreq;

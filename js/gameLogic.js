@@ -1,4 +1,5 @@
 var teamA, teamB, teamAAudio, teamBAudio;
+var introPip;
 var pressesToWin = 10; //presses required to win game (increase based on team sizes)
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
@@ -12,8 +13,9 @@ function setup() {
   noStroke();
   teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(254,239,110));
   teamB = new mashingBar(width/2, height, width/2, height, pressesToWin, color(255,53,197));
-  teamAAudio = new frequencyModulator(teamAVoiceFreq, 2, 2);
-  teamBAudio = new frequencyModulator(teamBVoiceFreq, 1.5, 1.75);
+  teamAAudio = new simpleSynth(teamAVoiceFreq, 2, 2);
+  teamBAudio = new simpleSynth(teamBVoiceFreq, 1.5, 1.75);
+  introPip = new simpleSynth(360, 1, 0);
   alertOverlay = new gameText(width/2, height/2, 48);
   textFont('Bangers');
 };
@@ -49,12 +51,14 @@ $('button[name="start-game"]').on('click', function(){
 
 function countdown() {
    if (gameStartCount == 0) {
-   alertOverlay.flashText('Mash!', 2.125);
-   clearInterval(startTimer);
-   buttonsDisabled = false;
+     introPip.simpleEnv(audioCtx.currentTime, 720, 10, 250);
+     alertOverlay.flashText('Mash!', 2.125);
+     clearInterval(startTimer);
+     buttonsDisabled = false;
    $('.team-buttons').prop('disabled', buttonsDisabled);
    }
    else {
+    introPip.simpleEnv(audioCtx.currentTime, 360, 10, 100);
   	alertOverlay.flashText(gameStartCount, 4.25);
    	gameStartCount --;
    };
