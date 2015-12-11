@@ -1,17 +1,13 @@
-@import url(https://fonts.googleapis.com/css?family=Bangers);
+@font-face {
+  font-family: 'Bangers';
+  src: url(../frameworks/Bangers.ttf);
+}
 
 body {
   font-family: 'Bangers', cursive;  padding-top: 5em;
   padding-bottom: 5em;
 }
+
 canvas {
   vertical-align: middle;
-}
-
-.extra-pad {
-  padding: 0.25em;
-}
-
-@-moz-document url-prefix() {
-  fieldset { display: table-cell; }
 }
