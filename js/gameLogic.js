@@ -87,6 +87,6 @@ $('button[name="B"]').on('click', function() {
 
 function onGetDevices(ports){
   $.each(ports, function(key, value) {
-    $('#serial-select').append($('<option></option>').attr('value', value).text(value));
+    $('#serial-select').append($('<option></option>').attr('value', value.path).text(value.path));
   });
 };
