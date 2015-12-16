@@ -18,6 +18,7 @@ function setup() {
   introPip = new simpleSynth(360, 1, 0);
   alertOverlay = new gameText(width/2, height/2, 48);
   textFont('Bangers');
+  chrome.serial.getDevices(onGetDevices);
 };
 
 /*p5.js loop*/
@@ -83,3 +84,9 @@ $('button[name="B"]').on('click', function() {
     gameWin("B")
   };
 });
+
+function onGetDevices(ports){
+  $.each(ports, function(key, value) {
+    $('#serial-select').append($('<option></option>').attr('value', value).text(value));
+  });
+};
