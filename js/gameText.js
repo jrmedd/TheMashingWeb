@@ -3,14 +3,15 @@ function gameText(initX, initY, initSize) {
   this.xPos = initX;
   this.yPos = initY;
   this.textToDisplay = "";
-  this.textOpacity = 0;
+  this.textOpacity = 255;
   this.fadeOut = false;
+  this.textSize = initSize;
   textAlign(CENTER);
-  textSize(initSize);
 
   /*display text*/
   this.display = function(){
     push();
+    textSize(this.textSize)
     this.fadeOutState(); //check fadeout state and reduce opacity
     fill(color(0, this.textOpacity));
     text(this.textToDisplay, this.xPos, this.yPos);

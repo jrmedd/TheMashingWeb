@@ -1,6 +1,6 @@
 var teamA, teamB, teamAAudio, teamBAudio;
 var introPip;
-var pressesToWin = 10; //presses required to win game (increase based on team sizes)
+var pressesToWin = 25; //presses required to win game (increase based on team sizes)
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
 var teamBVoiceFreq = 220; //starting frequency of team's audio synth
