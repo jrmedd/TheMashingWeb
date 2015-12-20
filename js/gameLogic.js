@@ -38,7 +38,7 @@ function gameWin(team) {
   buttonsDisabled = true;
   $('.team-buttons').prop('disabled', buttonsDisabled);
   $('button[name="start-game"]').fadeIn();
-}
+};
 /* Count in game*/
 var startTimer;
 var gameStartCount;
@@ -90,3 +90,15 @@ function onGetDevices(ports){
     $('#serial-select').append($('<option></option>').attr('value', value.path).text(value.path));
   });
 };
+
+var connectionId = -1;
+
+function onConnect(connectionInfo){
+  connectionId = connectionInfo.connectionId;
+  console.log(connectionId);
+};
+
+$('#choose-serial-port').on('click', function(){
+  var selectedPort = $('#serial-select').val();
+  chrome.serial.connect(selectedPort, {bitrate: 9600}, onConnect);
+});
