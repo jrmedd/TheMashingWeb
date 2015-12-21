@@ -4,10 +4,40 @@
 }
 
 body {
-  font-family: 'Bangers', cursive;  padding-top: 5em;
-  padding-bottom: 5em;
+  font-family: 'Bangers', cursive;
+  padding-top: 3.5em;
+  padding-bottom: 3.5em;
 }
 
 canvas {
   vertical-align: middle;
+}
+
+#start-game {
+  border: 0;
+  background-color: green;
+  color: #fff;
+}
+
+.pulse {
+  -webkit-animation: pulsate 0.9s infinite alternate;
+  -moz-animation: pulsate 0.9s infinite alternate;
+  -animation: pulsate 0.9s infinite alternate;
+}
+
+@-webkit-keyframes pulsate {
+  from { box-shadow: 0 0 0px #fff; }
+  to { box-shadow: 0 0 15px #4177BB; }
+}
+@-moz-keyframes pulsate {
+  from { box-shadow: 0 0 0px #fff; }
+  to { box-shadow: 0 0 15px #4177BB; }
+}
+@keyframes pulsate {
+  from { box-shadow: 0 0 0px #fff; }
+  to { box-shadow: 0 0 15px #4177BB; }
+}
+#serial-widget {
+  margin-top: 0.5em;
+  max-width: 75%;
 }

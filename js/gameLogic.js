@@ -88,9 +88,16 @@ $('button[name="B"]').on('click', function() {
 });
 
 function onGetDevices(ports){
-  $.each(ports, function(key, value) {
-    $('#serial-select').append($('<option></option>').attr('value', value.path).text(value.path));
-  });
+  if (ports.length > 0) {
+    $.each(ports, function(key, value) {
+      $('#serial-select').append($('<option></option>').attr('value', value.path).text(value.path));
+    });
+  }
+  else {
+    $('#serial-select').append($('<option disabled>No devices detected!</option>'));
+    $('#serial-select').prop('disabled', true);
+    $("#choose-serial-port").prop('disabled', true);
+  }
 };
 
 var connectionId = -1;
