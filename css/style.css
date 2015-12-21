@@ -37,6 +37,12 @@ canvas {
   from { box-shadow: 0 0 0px #fff; }
   to { box-shadow: 0 0 15px #4177BB; }
 }
+
+select#serial-select {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+}
+
 #serial-widget {
   margin-top: 0.5em;
   max-width: 75%;
