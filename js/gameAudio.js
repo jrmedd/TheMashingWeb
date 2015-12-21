@@ -32,6 +32,9 @@ function simpleSynth(initFreq, initRel, initIndex) {
   this.vca.connect(masterVolume);
 
   this.simpleEnv = function(time, freqChange, attack, release){
+    this.modFreq = freqChange * this.carrierRel;
+    this.modulator.frequency.value = this.modFreq;
+    this.modulatorDepth.gain.value = this.modIndex * this.modFreq;
     this.carrier.frequency.value = freqChange; //carrier changes also need to affect modulator changes (abstract this!)
     this.attackTime = attack * 0.001; //attack time convert from ms
     this.releaseTime = release * 0.001; //release time convert from ms

@@ -35,6 +35,8 @@ function gameWin(team) {
   alertOverlay.flashText(winningMessage, 2.125);
   teamA.resetHeight();
   teamB.resetHeight();
+  teamAVoiceFreq = 440;
+  teamBVoiceFreq = 220;
   buttonsDisabled = true;
   $('.team-buttons').prop('disabled', buttonsDisabled);
   $('button[name="start-game"]').fadeIn();
