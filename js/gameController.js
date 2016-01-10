@@ -15,7 +15,6 @@ var connectionId = -1;
 
 function onConnect(connectionInfo){
   connectionId = connectionInfo.connectionId;
-  console.log(connectionId);
 };
 
 $('#choose-serial-port').on('click', function(){
@@ -24,9 +23,12 @@ $('#choose-serial-port').on('click', function(){
 });
 
 var onReceiveCallback = function(info) {
-  count += 1;
   if (info.connectionId == connectionId && info.data) {
     var str = ab2str(info.data);
+    if (str.split(',').length == 11) {
+      var buttonStates = str.split(',');
+      buttonStates.pop();
+    };
   };
 };
 
