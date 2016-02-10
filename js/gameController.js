@@ -11,8 +11,6 @@ function onGetDevices(ports){
   }
 };
 
-var connectionId = -1;
-
 function onConnect(connectionInfo){
   connectionId = connectionInfo.connectionId;
 };
@@ -26,7 +24,7 @@ var onReceiveCallback = function(info) {
   if (info.connectionId == connectionId && info.data) {
     var str = ab2str(info.data);
     if (str.split(',').length == 11) {
-      var buttonStates = str.split(',');
+      buttonStates = str.split(',');
       buttonStates.pop();
     };
   };

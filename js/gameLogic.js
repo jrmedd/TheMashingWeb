@@ -1,10 +1,17 @@
 var teamA, teamB, teamAAudio, teamBAudio;
 var introPip;
-var pressesToWin = 25; //presses required to win game (increase based on team sizes)
+var pressesToWin = 100; //presses required to win game (increase based on team sizes)
+var frequencyIncrement = 7;
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
 var teamBVoiceFreq = 220; //starting frequency of team's audio synth
 var buttonsDisabled = true;
+var buttonStates;
+var lastStates = [];
+for (var state = 0; state < 10; state ++){
+  lastStates[state] = 0;
+};
+var connectionId = -1;
 
 /*p5.js setup*/
 function setup() {
@@ -27,17 +34,66 @@ function draw() {
   teamA.display();
   teamB.display();
   alertOverlay.display();
+  if (connectionId > 0 && !buttonsDisabled) {
+    $.each(buttonStates, function(index, value){
+      var currentState = value;
+      var lastState = lastStates[index];
+      if (currentState != lastState) {
+        if (currentState == 1) {
+          if (index < buttonStates.length/5) {
+            teamA.incrementHeight();
+            teamAVoiceFreq += frequencyIncrement;
+            teamAAudio.simpleEnv(audioCtx.currentTime, teamAVoiceFreq, 25, 50);
+            if (teamA.stepsPressed > pressesToWin) {
+              gameWin("A")
+              return false;
+            };
+          }
+          else {
+            teamB.incrementHeight();
+            teamBVoiceFreq += frequencyIncrement;
+            teamBAudio.simpleEnv(audioCtx.currentTime, teamBVoiceFreq, 25, 50);
+            if (teamB.stepsPressed > pressesToWin) {
+              gameWin("B")
+              return false;
+            };
+          };
+        };
+      };
+      lastStates[index] = currentState;
+    });
+  };
 };
+
+/*team A mashes - eventually replace with physical input*/
+$('button[name="A"]').on('click', function() {
+  teamA.incrementHeight();
+  teamAVoiceFreq += frequencyIncrement;
+  teamAAudio.simpleEnv(audioCtx.currentTime, teamAVoiceFreq, 25, 50);
+  if (teamA.stepsPressed > pressesToWin) {
+    gameWin("A")
+  };
+});
+
+/*team B mashes - eventually replace with physical input*/
+$('button[name="B"]').on('click', function() {
+  teamB.incrementHeight();
+  teamBVoiceFreq += frequencyIncrement;
+  teamBAudio.simpleEnv(audioCtx.currentTime, teamBVoiceFreq, 25, 50);
+  if (teamB.stepsPressed > pressesToWin) {
+    gameWin("B")
+  };
+});
 
 /*trigger win state*/
 function gameWin(team) {
+  buttonsDisabled = true;
   var winningMessage = "Team " + team + " wins!";
   alertOverlay.flashText(winningMessage, 2.125);
   teamA.resetHeight();
   teamB.resetHeight();
   teamAVoiceFreq = 440;
   teamBVoiceFreq = 220;
-  buttonsDisabled = true;
   $('.team-buttons').prop('disabled', buttonsDisabled);
   $('button[name="start-game"]').fadeIn();
 };
@@ -66,23 +122,3 @@ function countdown() {
    	gameStartCount --;
    };
 };
-
-/*team A mashes - eventually replace with physical input*/
-$('button[name="A"]').on('click', function() {
-  teamA.incrementHeight();
-  teamAVoiceFreq += 7;
-  teamAAudio.simpleEnv(audioCtx.currentTime, teamAVoiceFreq, 25, 50);
-  if (teamA.stepsPressed > pressesToWin) {
-    gameWin("A")
-  };
-});
-
-/*team B mashes - eventually replace with physical input*/
-$('button[name="B"]').on('click', function() {
-  teamB.incrementHeight();
-  teamBVoiceFreq += 7;
-  teamBAudio.simpleEnv(audioCtx.currentTime, teamBVoiceFreq, 25, 50);
-  if (teamB.stepsPressed > pressesToWin) {
-    gameWin("B")
-  };
-});
