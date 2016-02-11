@@ -1,6 +1,6 @@
 var teamA, teamB, teamAAudio, teamBAudio;
 var introPip;
-var pressesToWin = 100; //presses required to win game (increase based on team sizes)
+var pressesToWin = 150; //presses required to win game (increase based on team sizes)
 var frequencyIncrement = 7;
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
@@ -40,7 +40,7 @@ function draw() {
       var lastState = lastStates[index];
       if (currentState != lastState) {
         if (currentState == 1) {
-          if (index < buttonStates.length/5) {
+          if (index >= buttonStates.length/2) {
             teamA.incrementHeight();
             teamAVoiceFreq += frequencyIncrement;
             teamAAudio.simpleEnv(audioCtx.currentTime, teamAVoiceFreq, 25, 50);
