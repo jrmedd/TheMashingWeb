@@ -1,8 +1,9 @@
 chrome.app.window.current().fullscreen();
 
+var gameActive = false;
 var teamA, teamB, teamAAudio, teamBAudio;
 var introPip;
-var pressesToWin = 150; //presses required to win game (increase based on team sizes)
+var pressesToWin = 15; //presses required to win game (increase based on team sizes)
 var frequencyIncrement = 7;
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
@@ -14,6 +15,8 @@ for (var state = 0; state < 10; state ++){
   lastStates[state] = 0;
 };
 var connectionId = -1;
+var gameStartText;
+var startTextBlink;
 
 /*p5.js setup*/
 function setup() {
@@ -26,6 +29,10 @@ function setup() {
   teamBAudio = new simpleSynth(teamBVoiceFreq, 1.5, 1.75);
   introPip = new simpleSynth(360, 1, 0);
   alertOverlay = new gameText(width/2, height/2, 48);
+  alertOverlay.textOpacity = 0;
+  gameStartText = new gameText(width/2, height/2, 56);
+  gameStartText.textToDisplay = "Push Start";
+  startTextBlink = millis();
   textFont('Bangers');
   chrome.serial.getDevices(onGetDevices);
 };
@@ -65,6 +72,15 @@ function draw() {
       lastStates[index] = currentState;
     });
   };
+  if (!gameActive && alertOverlay.textOpacity == 0) {
+    var blinkNow = millis();
+    if ((blinkNow - startTextBlink) > 750.) {
+      console.log(alertOverlay.textOpacity);
+      gameStartText.textOpacity = abs(gameStartText.textOpacity - 255)
+      startTextBlink = blinkNow;
+    }
+    gameStartText.display();
+  };
 };
 
 /*team A mashes - eventually replace with physical input*/
@@ -90,6 +106,7 @@ $('button[name="B"]').on('click', function() {
 /*trigger win state*/
 function gameWin(team) {
   buttonsDisabled = true;
+  gameActive = false;
   var winningMessage = "Team " + team + " wins!";
   alertOverlay.flashText(winningMessage, 2.125);
   teamA.resetHeight();
@@ -99,11 +116,13 @@ function gameWin(team) {
   $('.team-buttons').prop('disabled', buttonsDisabled);
   $('button[name="start-game"]').fadeIn();
 };
+
 /* Count in game*/
 var startTimer;
 var gameStartCount;
 
 $('button[name="start-game"]').on('click', function(){
+  gameActive = true;
   $(this).fadeOut('fast');
   alertOverlay.flashText('Ready?', 4.25);
 	gameStartCount = 3;
@@ -111,16 +130,16 @@ $('button[name="start-game"]').on('click', function(){
 });
 
 function countdown() {
-   if (gameStartCount == 0) {
-     introPip.simpleEnv(audioCtx.currentTime, 720, 10, 250);
-     alertOverlay.flashText('Mash!', 2.125);
-     clearInterval(startTimer);
-     buttonsDisabled = false;
-   $('.team-buttons').prop('disabled', buttonsDisabled);
-   }
-   else {
+  if (gameStartCount == 0) {
+    introPip.simpleEnv(audioCtx.currentTime, 720, 10, 250);
+    alertOverlay.flashText('Mash!', 2.125);
+    clearInterval(startTimer);
+    buttonsDisabled = false;
+    $('.team-buttons').prop('disabled', buttonsDisabled);
+  }
+  else {
     introPip.simpleEnv(audioCtx.currentTime, 360, 10, 100);
-  	alertOverlay.flashText(gameStartCount, 4.25);
-   	gameStartCount --;
-   };
+    alertOverlay.flashText(gameStartCount, 4.25);
+  	gameStartCount --;
+  };
 };
