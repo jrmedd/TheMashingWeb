@@ -1,3 +1,5 @@
+chrome.app.window.current().fullscreen();
+
 var teamA, teamB, teamAAudio, teamBAudio;
 var introPip;
 var pressesToWin = 150; //presses required to win game (increase based on team sizes)
