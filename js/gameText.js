@@ -13,7 +13,7 @@ function gameText(initX, initY, initSize) {
     push();
     textSize(this.textSize)
     this.fadeOutState(); //check fadeout state and reduce opacity
-    fill(color(0, this.textOpacity));
+    fill(color(255, this.textOpacity));
     text(this.textToDisplay, this.xPos, this.yPos);
     pop();
   };

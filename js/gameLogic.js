@@ -20,7 +20,7 @@ var startTextBlink;
 
 /*p5.js setup*/
 function setup() {
-  var gameArea = createCanvas(250, 500);
+  var gameArea = createCanvas(400, 500);
   gameArea.parent('game-area');
   noStroke();
   teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(254,239,110));
@@ -28,18 +28,18 @@ function setup() {
   teamAAudio = new simpleSynth(teamAVoiceFreq, 2, 2);
   teamBAudio = new simpleSynth(teamBVoiceFreq, 1.5, 1.75);
   introPip = new simpleSynth(360, 1, 0);
-  alertOverlay = new gameText(width/2, height/2, 48);
+  alertOverlay = new gameText(width/2, height/2, 56);
   alertOverlay.textOpacity = 0;
-  gameStartText = new gameText(width/2, height/2, 56);
+  gameStartText = new gameText(width/2, height/2, 62);
   gameStartText.textToDisplay = "Push Start";
   startTextBlink = millis();
-  textFont('Bangers');
+  textFont('Upheaval');
   chrome.serial.getDevices(onGetDevices);
 };
 
 /*p5.js loop*/
 function draw() {
-  background(255);
+  background(0);
   teamA.display();
   teamB.display();
   alertOverlay.display();

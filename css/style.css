@@ -1,16 +1,27 @@
 @font-face {
-  font-family: 'Bangers';
-  src: url(../frameworks/Bangers.ttf);
+  font-family: 'Upheaval';
+  src: url(../frameworks/Upheaval.ttf);
+}
+
+@font-face {
+  font-family: 'PixelArial';
+  src: url(../frameworks/PixelArial.ttf);
 }
 
 body {
-  font-family: 'Bangers', cursive;
+  background: #000;
+  color: #fff;
+  font-family: 'PixelArial', sans-serif;
   padding-top: 3.5em;
   padding-bottom: 3.5em;
 }
 
 canvas {
   vertical-align: middle;
+}
+
+h1 {
+  font-family: 'Upheaval', sans-serif;;
 }
 
 #start-game {
@@ -23,6 +34,22 @@ canvas {
   -webkit-animation: pulsate 0.9s infinite alternate;
   -moz-animation: pulsate 0.9s infinite alternate;
   -animation: pulsate 0.9s infinite alternate;
+}
+
+.panel {
+  background-color: #000;
+  border-color: #fff;
+}
+
+#config-bar {
+  opacity: 0;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+}
+
+#config-bar:hover {
+  opacity: 1;
 }
 
 @-webkit-keyframes pulsate {
