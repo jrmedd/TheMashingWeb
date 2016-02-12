@@ -25,6 +25,7 @@ h1 {
 }
 
 #start-game {
+  display:none;
   border: 0;
   background-color: green;
   color: #fff;

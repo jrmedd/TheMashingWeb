@@ -3,7 +3,7 @@ chrome.app.window.current().fullscreen();
 var gameActive = false;
 var teamA, teamB, teamAAudio, teamBAudio;
 var introPip;
-var pressesToWin = 15; //presses required to win game (increase based on team sizes)
+var pressesToWin = 150; //presses required to win game (increase based on team sizes)
 var frequencyIncrement = 7;
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
@@ -75,7 +75,6 @@ function draw() {
   if (!gameActive && alertOverlay.textOpacity == 0) {
     var blinkNow = millis();
     if ((blinkNow - startTextBlink) > 750.) {
-      console.log(alertOverlay.textOpacity);
       gameStartText.textOpacity = abs(gameStartText.textOpacity - 255)
       startTextBlink = blinkNow;
     }

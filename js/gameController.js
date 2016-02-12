@@ -18,14 +18,14 @@ function onConnect(connectionInfo){
 $('#choose-serial-port').on('click', function(){
   var selectedPort = $('#serial-select').val();
   chrome.serial.connect(selectedPort, {bitrate: 9600}, onConnect);
+  $('#start-game').fadeIn();
 });
 
 var onReceiveCallback = function(info) {
   if (info.connectionId == connectionId && info.data) {
     var str = ab2str(info.data);
-    if (str.split(',').length == 11) {
+    if (str.split(',').length == 10) {
       buttonStates = str.split(',');
-      buttonStates.pop();
     };
   };
 };
