@@ -1,9 +1,9 @@
 chrome.app.window.current().fullscreen();
 
 var gameActive = false;
-var teamA, teamB, teamAAudio, teamBAudio;
+var teamA, teamB, teamAAudio, teamBAudio, teamALabel, teamBLabel;
 var introPip;
-var pressesToWin = 150; //presses required to win game (increase based on team sizes)
+var pressesToWin = 5; //presses required to win game (increase based on team sizes)
 var frequencyIncrement = 7;
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
@@ -27,6 +27,10 @@ function setup() {
   teamB = new mashingBar(width/2, height, width/2, height, pressesToWin, color(255,53,197));
   teamAAudio = new simpleSynth(teamAVoiceFreq, 2, 2);
   teamBAudio = new simpleSynth(teamBVoiceFreq, 1.5, 1.75);
+  teamALabel = new gameText(width*0.25, height*0.99, 22);
+  teamALabel.textToDisplay = "Team A";
+  teamBLabel = new gameText(width*0.75, height*0.99, 22);
+  teamBLabel.textToDisplay = "Team B";
   introPip = new simpleSynth(360, 1, 0);
   alertOverlay = new gameText(width/2, height/2, 56);
   alertOverlay.textOpacity = 0;
@@ -44,6 +48,8 @@ function draw() {
   teamB.display();
   alertOverlay.display();
   if (connectionId > 0 && !buttonsDisabled) {
+    teamALabel.display();
+    teamBLabel.display();
     $.each(buttonStates, function(index, value){
       var currentState = value;
       var lastState = lastStates[index];
@@ -104,6 +110,7 @@ $('button[name="B"]').on('click', function() {
 
 /*trigger win state*/
 function gameWin(team) {
+  victoryMotif.play(audioCtx.currentTime);
   buttonsDisabled = true;
   gameActive = false;
   var winningMessage = "Team " + team + " wins!";

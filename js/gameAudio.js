@@ -4,6 +4,14 @@ masterVolume = audioCtx.createGain();
 masterVolume.gain.value = 0.5;
 masterVolume.connect(audioCtx.destination);
 
+var sequencerTempo = 125;
+var victoryMotifNotes = ['G3 s', 'C4 s', 'E4 s', 'G4 s', '- s', 'E4 s', 'G4 s', '- s' ]
+victoryMotif = new TinyMusic.Sequence(audioCtx, sequencerTempo, victoryMotifNotes);
+victoryMotif.loop = false;
+victoryMotif.gain.gain.value = 0.4
+victoryMotif.staccato = 0.5;
+victoryMotif.waveType = 'triangle';
+
 function simpleSynth(initFreq, initRel, initIndex) {
   /* Carrier oscillator */
   this.carrier = audioCtx.createOscillator();
