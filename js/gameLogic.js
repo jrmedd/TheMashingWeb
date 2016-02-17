@@ -3,7 +3,7 @@ chrome.app.window.current().fullscreen();
 var gameActive = false;
 var teamA, teamB, teamAAudio, teamBAudio, teamALabel, teamBLabel;
 var introPip;
-var pressesToWin = 5; //presses required to win game (increase based on team sizes)
+var pressesToWin = 150; //presses required to win game (increase based on team sizes)
 var frequencyIncrement = 7;
 var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth

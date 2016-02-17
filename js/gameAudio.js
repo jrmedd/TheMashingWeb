@@ -8,9 +8,9 @@ var sequencerTempo = 125;
 var victoryMotifNotes = ['G3 s', 'C4 s', 'E4 s', 'G4 s', '- s', 'E4 s', 'G4 s', '- s' ]
 victoryMotif = new TinyMusic.Sequence(audioCtx, sequencerTempo, victoryMotifNotes);
 victoryMotif.loop = false;
-victoryMotif.gain.gain.value = 0.4
+victoryMotif.gain.gain.value = 0.3;
 victoryMotif.staccato = 0.5;
-victoryMotif.waveType = 'triangle';
+victoryMotif.waveType = 'square';
 
 function simpleSynth(initFreq, initRel, initIndex) {
   /* Carrier oscillator */
