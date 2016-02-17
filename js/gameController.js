@@ -24,8 +24,9 @@ $('#choose-serial-port').on('click', function(){
 var onReceiveCallback = function(info) {
   if (info.connectionId == connectionId && info.data) {
     var str = ab2str(info.data);
-    if (str.split(',').length == 10) {
+    if (str.split(',').length == 11) {
       buttonStates = str.split(',');
+      startButton = buttonStates.pop();
     };
   };
 };

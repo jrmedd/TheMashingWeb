@@ -9,6 +9,8 @@ var alertOverlay;
 var teamAVoiceFreq = 440; //starting frequency of team's audio synth
 var teamBVoiceFreq = 220; //starting frequency of team's audio synth
 var buttonsDisabled = true;
+var startButton;
+var lastStartButton = 0;
 var buttonStates;
 var lastStates = [];
 for (var state = 0; state < 10; state ++){
@@ -47,9 +49,20 @@ function draw() {
   teamA.display();
   teamB.display();
   alertOverlay.display();
+  /*Check start button state (Arduino connected, game not active)*/
+  if (connectionId > 0 && !gameActive) {
+    if (startButton != lastStartButton) {
+      if (startButton == 1){
+        startGame();
+        lastStartButton = startButton;
+      };
+    };
+  };
+  /*Check button states, display team labels (Arduino connected, buttons enabled)*/
   if (connectionId > 0 && !buttonsDisabled) {
     teamALabel.display();
     teamBLabel.display();
+    /*iterate over buttonStates from gameController.js*/
     $.each(buttonStates, function(index, value){
       var currentState = value;
       var lastState = lastStates[index];
@@ -78,6 +91,7 @@ function draw() {
       lastStates[index] = currentState;
     });
   };
+  /*Display blinking game start text (game not active, alert text no longer visible)*/
   if (!gameActive && alertOverlay.textOpacity == 0) {
     var blinkNow = millis();
     if ((blinkNow - startTextBlink) > 750.) {
@@ -87,26 +101,6 @@ function draw() {
     gameStartText.display();
   };
 };
-
-/*team A mashes - eventually replace with physical input*/
-$('button[name="A"]').on('click', function() {
-  teamA.incrementHeight();
-  teamAVoiceFreq += frequencyIncrement;
-  teamAAudio.simpleEnv(audioCtx.currentTime, teamAVoiceFreq, 25, 50);
-  if (teamA.stepsPressed > pressesToWin) {
-    gameWin("A")
-  };
-});
-
-/*team B mashes - eventually replace with physical input*/
-$('button[name="B"]').on('click', function() {
-  teamB.incrementHeight();
-  teamBVoiceFreq += frequencyIncrement;
-  teamBAudio.simpleEnv(audioCtx.currentTime, teamBVoiceFreq, 25, 50);
-  if (teamB.stepsPressed > pressesToWin) {
-    gameWin("B")
-  };
-});
 
 /*trigger win state*/
 function gameWin(team) {
@@ -119,21 +113,18 @@ function gameWin(team) {
   teamB.resetHeight();
   teamAVoiceFreq = 440;
   teamBVoiceFreq = 220;
-  $('.team-buttons').prop('disabled', buttonsDisabled);
-  $('button[name="start-game"]').fadeIn();
 };
 
-/* Count in game*/
+/* Count in game with pulsing text and pips*/
 var startTimer;
 var gameStartCount;
 
-$('button[name="start-game"]').on('click', function(){
+function startGame() {
   gameActive = true;
-  $(this).fadeOut('fast');
   alertOverlay.flashText('Ready?', 4.25);
 	gameStartCount = 3;
 	startTimer = setInterval(function(){ countdown() }, 1000);
-});
+};
 
 function countdown() {
   if (gameStartCount == 0) {
@@ -141,7 +132,6 @@ function countdown() {
     alertOverlay.flashText('Mash!', 2.125);
     clearInterval(startTimer);
     buttonsDisabled = false;
-    $('.team-buttons').prop('disabled', buttonsDisabled);
   }
   else {
     introPip.simpleEnv(audioCtx.currentTime, 360, 10, 100);
