@@ -1,4 +1,5 @@
 chrome.app.window.current().fullscreen();
+var debugMode = false;
 
 var gameActive = false;
 var teamA, teamB, teamAAudio, teamBAudio, teamALabel, teamBLabel;
@@ -20,10 +21,13 @@ var connectionId = -1;
 var gameStartText;
 var startTextBlink;
 
+var debugFrameRate;
+
 /*p5.js setup*/
 function setup() {
   var gameArea = createCanvas(400, 500);
   gameArea.parent('game-area');
+  frameRate(30); //limting frameRate increases performance on Raspberry Pi 2
   noStroke();
   teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(254,239,110));
   teamB = new mashingBar(width/2, height, width/2, height, pressesToWin, color(255,53,197));
@@ -40,6 +44,7 @@ function setup() {
   gameStartText.textToDisplay = "Push Start";
   startTextBlink = millis();
   textFont('Upheaval');
+  debugFrameRate = new gameText(width*0.5, height*0.1, 18);
   chrome.serial.getDevices(onGetDevices);
 };
 
@@ -52,9 +57,9 @@ function draw() {
   /*Check start button state (Arduino connected, game not active)*/
   if (connectionId > 0 && !gameActive) {
     if (startButton != lastStartButton) {
-      if (startButton == 1){
+      lastStartButton = startButton;
+      if (startButton == 1) {
         startGame();
-        lastStartButton = startButton;
       };
     };
   };
@@ -92,7 +97,7 @@ function draw() {
     });
   };
   /*Display blinking game start text (game not active, alert text no longer visible)*/
-  if (!gameActive && alertOverlay.textOpacity == 0) {
+  if (!gameActive && alertOverlay.textOpacity < 1) {
     var blinkNow = millis();
     if ((blinkNow - startTextBlink) > 750.) {
       gameStartText.textOpacity = abs(gameStartText.textOpacity - 255)
@@ -104,11 +109,11 @@ function draw() {
 
 /*trigger win state*/
 function gameWin(team) {
-  victoryMotif.play(audioCtx.currentTime);
-  buttonsDisabled = true;
   gameActive = false;
+  buttonsDisabled = true;
+  victoryMotif.play(audioCtx.currentTime);
   var winningMessage = "Team " + team + " wins!";
-  alertOverlay.flashText(winningMessage, 2.125);
+  alertOverlay.flashText(winningMessage, 4.5);
   teamA.resetHeight();
   teamB.resetHeight();
   teamAVoiceFreq = 440;
@@ -121,7 +126,7 @@ var gameStartCount;
 
 function startGame() {
   gameActive = true;
-  alertOverlay.flashText('Ready?', 4.25);
+  alertOverlay.flashText('Ready?', 4.5);
 	gameStartCount = 3;
 	startTimer = setInterval(function(){ countdown() }, 1000);
 };
@@ -129,13 +134,13 @@ function startGame() {
 function countdown() {
   if (gameStartCount == 0) {
     introPip.simpleEnv(audioCtx.currentTime, 720, 10, 250);
-    alertOverlay.flashText('Mash!', 2.125);
+    alertOverlay.flashText('Mash!', 4.5);
     clearInterval(startTimer);
     buttonsDisabled = false;
   }
   else {
     introPip.simpleEnv(audioCtx.currentTime, 360, 10, 100);
-    alertOverlay.flashText(gameStartCount, 4.25);
+    alertOverlay.flashText(gameStartCount, 8.5);
   	gameStartCount --;
   };
 };
