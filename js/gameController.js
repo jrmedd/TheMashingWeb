@@ -1,10 +1,19 @@
+var preferredPort = '/dev/ttyACM0';
+
 function onGetDevices(ports){
   if (ports.length > 0) {
     $.each(ports, function(key, value) {
       $('#serial-select').append($('<option></option>').attr('value', value.path).text(value.path));
+      if (value.path == preferredPort) {
+        chrome.serial.connect(preferredPort, {bitrate: 9600}, onConnect);
+      }
+      else {
+        $("#controller-warning").html('Preferred controller not found');
+      }
     });
   }
   else {
+    $("#controller-warning").html('No controllers found');
     $('#serial-select').append($('<option disabled>No devices detected!</option>'));
     $('#serial-select').prop('disabled', true);
     $("#choose-serial-port").prop('disabled', true);
@@ -18,7 +27,7 @@ function onConnect(connectionInfo){
 $('#choose-serial-port').on('click', function(){
   var selectedPort = $('#serial-select').val();
   chrome.serial.connect(selectedPort, {bitrate: 9600}, onConnect);
-  $('#start-game').fadeIn();
+  $('#controller-warning').fadeOut();
 });
 
 var onReceiveCallback = function(info) {
