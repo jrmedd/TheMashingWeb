@@ -6,8 +6,9 @@ function onGetDevices(ports){
       $('#serial-select').append($('<option></option>').attr('value', value.path).text(value.path));
       if (value.path == preferredPort) {
         chrome.serial.connect(preferredPort, {bitrate: 9600}, onConnect);
+        $('#controller-warning').hide();
       }
-      else {
+      else if (value.path != preferredPort && connectionId < 1) {
         $("#controller-warning").html('Preferred controller not found');
       }
     });
