@@ -1,4 +1,4 @@
-var preferredPort = '/dev/ttyACM0';
+var preferredPort = '/dev/ttyWHATEVER';
 
 function onGetDevices(ports){
   if (ports.length > 0) {

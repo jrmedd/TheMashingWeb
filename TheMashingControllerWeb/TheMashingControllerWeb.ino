@@ -9,7 +9,7 @@ void setup() {
    pinMode(i, INPUT);
  };
  pinMode(startButton, INPUT);
-};
+}
 
 void loop() {
   String allButtonStates = "";
@@ -19,5 +19,5 @@ void loop() {
   };
   allButtonStates += String(digitalRead(startButton));
   Serial.println(allButtonStates);
-  delay(25) //introducing a delay increases performance on Raspberry Pi 2
-};
+  delay(25); //introducing a delay increases performance on Raspberry Pi 2
+}

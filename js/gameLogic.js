@@ -29,8 +29,8 @@ function setup() {
   gameArea.parent('game-area');
   frameRate(30); //limting frameRate increases performance on Raspberry Pi 2
   noStroke();
-  teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(255,53,197));
-  teamB = new mashingBar(width/2, height, width/2, height, pressesToWin, color(254,239,110));
+  teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(254,239,110));
+  teamB = new mashingBar(width/2, height, width/2, height, pressesToWin, color(255,53,197));
   teamAAudio = new simpleSynth(teamAVoiceFreq, 2, 2);
   teamBAudio = new simpleSynth(teamBVoiceFreq, 1.5, 1.75);
   teamALabel = new gameText(width*0.25, height*0.99, 22);
