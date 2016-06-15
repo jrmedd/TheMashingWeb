@@ -3,9 +3,11 @@
 I've loosely described The Mashing as my lover letter to and critique of button mashing games. I'll be including the game (in its own cabinet) in my [Awkward Arcade](http://awkwardarcade.co.uk).
 
 It's now a cabinet:
+
 ![The Mashing Cabinet](http://jamesmedd.co.uk/images/mashingCabinet.jpg)
 
 And makes people look like this:
+
 ![The Mashing Faces](http://jamesmedd.co.uk/images/mashingFaces.jpg)
 
 
