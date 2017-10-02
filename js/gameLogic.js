@@ -25,12 +25,20 @@ var debugFrameRate;
 
 /*p5.js setup*/
 function setup() {
-  var gameArea = createCanvas(400, 500);
+  if ($(window).width() > $(window).height()) {
+    var gameWidth = $(window).height()*0.75;
+    var gameHeight= $(window).height()*0.75;
+  }
+  else {
+    var gameWidth = $(window).width()*0.75;
+    var gameHeight= $(window).width()*0.75;
+  }
+  var gameArea = createCanvas(gameWidth, gameHeight);
   gameArea.parent('game-area');
   frameRate(30); //limting frameRate increases performance on Raspberry Pi 2
   noStroke();
-  teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(254,239,110));
-  teamB = new mashingBar(width/2, height, width/2, height, pressesToWin, color(255,53,197));
+  teamA = new mashingBar(0, height, width/2, height, pressesToWin, color(255,53,197));
+  teamB = new mashingBar(width/2, height, width/2, height, pressesToWin, color(102, 211, 232));
   teamAAudio = new simpleSynth(teamAVoiceFreq, 2, 2);
   teamBAudio = new simpleSynth(teamBVoiceFreq, 1.5, 1.75);
   teamALabel = new gameText(width*0.25, height*0.99, 22);
@@ -74,20 +82,20 @@ function draw() {
       if (currentState != lastState) {
         if (currentState == 1) {
           if (index >= buttonStates.length/2) {
-            teamA.incrementHeight();
-            teamAVoiceFreq += frequencyIncrement;
-            teamAAudio.simpleEnv(audioCtx.currentTime, teamAVoiceFreq, 25, 50);
-            if (teamA.stepsPressed > pressesToWin) {
-              gameWin("A")
-              return false;
-            };
-          }
-          else {
             teamB.incrementHeight();
             teamBVoiceFreq += frequencyIncrement;
             teamBAudio.simpleEnv(audioCtx.currentTime, teamBVoiceFreq, 25, 50);
             if (teamB.stepsPressed > pressesToWin) {
               gameWin("B")
+              return false;
+            };
+          }
+          else {
+            teamA.incrementHeight();
+            teamAVoiceFreq += frequencyIncrement;
+            teamAAudio.simpleEnv(audioCtx.currentTime, teamAVoiceFreq, 25, 50);
+            if (teamA.stepsPressed > pressesToWin) {
+              gameWin("A")
               return false;
             };
           };
